@@ -42,8 +42,13 @@ Page {
         // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
+                text: qsTr("Settings")
+                onClicked: pageStack.push(Qt.resolvedUrl("Settings.qml"))
+            }
+
+            MenuItem {
                 text: qsTr("Show log")
-                onClicked: pageStack.push(Qt.resolvedUrl("SecondPage.qml"))
+                onClicked: pageStack.push(Qt.resolvedUrl("Logs.qml"))
             }
         }
 
@@ -66,10 +71,14 @@ Page {
                 font.pixelSize: Theme.fontSizeExtraLarge
             }
             Button {
+                width: parent.width
                 text: qsTr("In")
+                onClicked: console.log("Clicked in!")
             }
             Button {
+                width: parent.width
                 text: qsTr("Out")
+                onClicked: console.log("Clicked out!")
             }
         }
     }

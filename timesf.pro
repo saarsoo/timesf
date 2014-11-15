@@ -18,13 +18,14 @@ SOURCES += src/timesf.cpp
 
 OTHER_FILES += qml/timesf.qml \
     qml/cover/CoverPage.qml \
-    qml/pages/FirstPage.qml \
-    qml/pages/SecondPage.qml \
     rpm/timesf.changes.in \
     rpm/timesf.spec \
     rpm/timesf.yaml \
     translations/*.ts \
-    timesf.desktop
+    timesf.desktop \
+    qml/pages/Settings.qml \
+    qml/pages/Logs.qml \
+    qml/pages/Time.qml
 
 # to disable building translations every time, comment out the
 # following CONFIG line

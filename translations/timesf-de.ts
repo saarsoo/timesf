@@ -26,24 +26,15 @@
         <source>Hello Sailors</source>
         <translation type="vanished">Hallo Matrosen</translation>
     </message>
+</context>
+<context>
+    <name>Logs</name>
     <message>
-        <source>A timesf application</source>
+        <source>Time log</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Timesf</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Show log</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>In</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Out</source>
+        <source>Will be some logging here</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -55,14 +46,44 @@
     </message>
     <message>
         <source>Item</source>
-        <translation>Element</translation>
+        <translation type="vanished">Element</translation>
     </message>
+</context>
+<context>
+    <name>Settings</name>
     <message>
-        <source>Time log</source>
+        <source>Settings</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Will be some logging here</source>
+        <source>Will be some settings here</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Time</name>
+    <message>
+        <source>Settings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Show log</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Timesf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>A timesf application</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Out</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
