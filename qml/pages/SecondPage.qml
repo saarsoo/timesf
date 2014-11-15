@@ -33,14 +33,27 @@ import Sailfish.Silica 1.0
 
 
 Page {
+    Component.onCompleted: {
+        logModel.append(BackgroundItem)
+    }
+
+    ListModel {
+      id: logModel
+    }
+
     id: page
     SilicaListView {
         id: listView
-        model: 20
+        model: logModel
         anchors.fill: parent
         header: PageHeader {
-            title: qsTr("Nested Page")
+            title: qsTr("Time log")
         }
+        ViewPlaceholder {
+            enabled: true
+            text: qsTr("Will be some logging here")
+        }
+
         delegate: BackgroundItem {
             id: delegate
 

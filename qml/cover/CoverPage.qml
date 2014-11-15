@@ -31,24 +31,26 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-CoverBackground {
+//CoverBackground {
+Rectangle {
+    anchors.fill: parent
+    color: "black"
+
     Label {
         id: label
         anchors.centerIn: parent
-        text: qsTr("My Cover")
+        text: qsTr("Timesf")
     }
 
     CoverActionList {
         id: coverAction
 
-        CoverAction {
+        /*CoverAction {
             iconSource: "image://theme/icon-cover-next"
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-pause"
-        }
+        }*/
     }
 }
-
-
