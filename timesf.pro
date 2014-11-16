@@ -25,7 +25,9 @@ OTHER_FILES += qml/timesf.qml \
     timesf.desktop \
     qml/pages/Settings.qml \
     qml/pages/Logs.qml \
-    qml/pages/Time.qml
+    qml/pages/Time.qml \
+    qml/timesf.js \
+    qml/ajax.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line
