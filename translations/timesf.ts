@@ -15,7 +15,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Will be some logging here</source>
+        <source>No logs today!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -54,6 +54,14 @@
     </message>
     <message>
         <source>Out</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logged In!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logged Out!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

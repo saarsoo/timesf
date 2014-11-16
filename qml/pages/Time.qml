@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../timesf.js" as Timejs
+import "../timesf.js" as TimeJS
 
 
 Page {
@@ -45,12 +45,54 @@ Page {
             Button {
                 width: parent.width
                 text: qsTr("In")
-                onClicked: Timejs.clickedIn()
+                onClicked: {
+                    busyIndicator.running = true;
+                    TimeJS.logIn(function(data){
+                        busyIndicator.running = false;
+                        logInText.visible = true;
+                        timerIn.start();
+                    })
+                }
             }
             Button {
                 width: parent.width
                 text: qsTr("Out")
-                onClicked: console.log("Clicked out!")
+                onClicked: {
+                    busyIndicator.running = true;
+                    TimeJS.logOut(function(data){
+                        busyIndicator.running = false;
+                        logOutText.visible = true;
+                        timerOut.start();
+                    })
+                }
+            }
+            BusyIndicator {
+                id: busyIndicator
+                anchors.horizontalCenter: parent.horizontalCenter
+            }
+            Timer {
+                id: timerIn
+                interval: 2500
+                running: false
+                repeat: false
+                onTriggered: logInText.visible = false
+            }
+            Timer {
+                id: timerOut
+                interval: 2500
+                running: false
+                repeat: false
+                onTriggered: logOutText.visible = false
+            }
+            Label {
+                id: logInText
+                visible: false
+                text: qsTr("Logged In!")
+            }
+            Label {
+                id: logOutText
+                visible: false
+                text: qsTr("Logged Out!")
             }
         }
     }
