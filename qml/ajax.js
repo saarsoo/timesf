@@ -7,13 +7,14 @@ function get(url, callback){
     http.setRequestHeader("Connection", "close");
 
     http.onreadystatechange = function() { // Call a function when the state changes.
-                if (http.readyState == 4) {
-                    if (http.status == 200) {
-                        callback(http.responseText);
-                    } else {
-                        console.log("error: " + http.status)
-                    }
-                }
+        if (http.readyState == 4) {
+            if (http.status == 200) {
+                callback(http.responseText);
+            } else {
+                console.log("error: " + http.status);
             }
+        }
+    }
+
     http.send();
 }
