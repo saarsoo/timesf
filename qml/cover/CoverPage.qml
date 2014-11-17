@@ -31,10 +31,8 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
 
-//CoverBackground {
-Rectangle {
+CoverBackground {
     anchors.fill: parent
-    color: "black"
 
     Label {
         id: label
@@ -45,12 +43,12 @@ Rectangle {
     CoverActionList {
         id: coverAction
 
-        /*CoverAction {
+        CoverAction {
             iconSource: "image://theme/icon-cover-next"
         }
 
         CoverAction {
             iconSource: "image://theme/icon-cover-pause"
-        }*/
+        }
     }
 }
