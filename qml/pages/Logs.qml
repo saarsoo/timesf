@@ -25,7 +25,6 @@ Page {
         width: root.width
         height: root.height
         anchors.top: root.top
-        //anchors.fill: parent
         model: logsModel
         header: PageHeader {
             title: qsTr("Time log")
@@ -40,11 +39,13 @@ Page {
         }
         delegate: Item {
             width: ListView.view.width
-            height: 50
+            height: 70
 
             BackgroundItem {
-                Label {
-                    text: type + ":" + time
+                Column {
+                    Label {
+                        text: time + " - " + type
+                    }
                 }
             }
         }
