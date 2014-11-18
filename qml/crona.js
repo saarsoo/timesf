@@ -6,36 +6,38 @@ var userId;
 var pin;
 var baseUrl;
 
-function logIn(callback) {
-    Ajax.get('http://google.se', function(data){
-        callback(data);
-    });
+function clockIn(success, error) {
+    tryLogin(function(){
+        // clock in code here!
+    }, error);
 }
 
-function logOut(callback){
-    Ajax.get('http://google.se', function(data){
-        callback(data);
-    });
+function clockOut(success, error){
+    tryLogin(function(){
+        // clock out code here!
+    }, error);
 }
 
-function getLogs(callback) {
-    return [{type: 'IN', time: '08:22'}, {type: 'OUT', time: '11:44'}, {type: 'IN', time: '18:10'}];
+function getLogs(success, error) {
+    tryLogin(function(){
+        var options = {
+            method: 'GET',
+            url: baseUrl + 'webbtidur/?cmd=getstamplistxml&kortnr=' + userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+            headers: {Cookie: 'crona_cbo_login_value_1=true;', accept: 'application/json'},
+            success: function(data){
+                success(formatLogs(data));
+            },
+            error: error
+        };
 
-    checkLoggedIn();
-
-    var options = {
-        method: 'GET',
-        url: baseUrl + 'webbtidur/?cmd=getstamplistxml&kortnr=' + userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
-        headers: {Cookie: 'crona_cbo_login_value_1=true;'}
-    };
-
-    var xhr = Ajax.request(options);
-
-    return formatLogs(xhr.responseText);
+        Ajax.request(options);
+    }, error);
 }
 
 function formatLogs(data) {
-    var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
+    return JSON.parse(data);
+
+    /*var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
     var match;
 
     var logs = [];
@@ -49,22 +51,28 @@ function formatLogs(data) {
             log.type = 'OUT';
         }
         logs.push(item);
-    }
+    }*/
 }
 
-function checkLoggedIn(){
+function tryLogin(success, error){
     if (sid) {
-        return;
+        success();
     }
 
     var options = {
         method: 'POST',
-        data: 'cmd=login&kortnr=' + userId + '&pinkod=' + pin + '&frm_forw=Logga+in'
+        data: 'cmd=login&kortnr=' + userId + '&pinkod=' + pin + '&frm_forw=Logga+in',
+        success: function(data, status, xhr){
+            var headers = xhr.getAllResponseHeaders();
+            var loc = http.getResponseHeader('Location');
+            sid = loc.split('=')[1];
+
+            success();
+        },
+        error: function(data, status){
+            error(qsTr('Failed to connect to crona server'));
+        }
     };
 
-    var xhr = Ajax.request(options);
-    var headers = xhr.getAllResponseHeaders();
-
-    var loc = http.getResponseHeader('Location');
-    sid = loc.split('=')[1];
+    Ajax.request(options);
 }
