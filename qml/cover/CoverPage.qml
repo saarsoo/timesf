@@ -32,23 +32,9 @@ import QtQuick 2.0
 import Sailfish.Silica 1.0
 
 CoverBackground {
-    anchors.fill: parent
-
     Label {
         id: label
         anchors.centerIn: parent
         text: qsTr("Timesf")
-    }
-
-    CoverActionList {
-        id: coverAction
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-next"
-        }
-
-        CoverAction {
-            iconSource: "image://theme/icon-cover-pause"
-        }
     }
 }
