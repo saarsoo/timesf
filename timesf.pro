@@ -26,8 +26,9 @@ OTHER_FILES += qml/timesf.qml \
     qml/pages/Settings.qml \
     qml/pages/Logs.qml \
     qml/pages/Time.qml \
-    qml/timesf.js \
-    qml/ajax.js
+    qml/ajax.js \
+    qml/database.js \
+    qml/crona.js
 
 # to disable building translations every time, comment out the
 # following CONFIG line

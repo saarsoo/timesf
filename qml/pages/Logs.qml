@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../timesf.js" as TimeJS
+import "../crona.js" as Crona
 
 Page {
     id: root
@@ -8,7 +8,7 @@ Page {
     property bool loaded: false
 
     Component.onCompleted: {
-        TimeJS.getLogs(function(data){
+        Crona.getLogs(function(data){
             for(var i in data){
                 logsModel.append(data[i]);
             }

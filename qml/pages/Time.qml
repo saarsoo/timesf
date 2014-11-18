@@ -1,6 +1,6 @@
 import QtQuick 2.0
 import Sailfish.Silica 1.0
-import "../timesf.js" as TimeJS
+import "../crona.js" as Crona
 
 
 Page {
@@ -47,7 +47,7 @@ Page {
                 text: qsTr("In")
                 onClicked: {
                     busyIndicator.running = true;
-                    TimeJS.logIn(function(data){
+                    Crona.logIn(function(data){
                         busyIndicator.running = false;
                         logInText.visible = true;
                         timerIn.start();
@@ -59,7 +59,7 @@ Page {
                 text: qsTr("Out")
                 onClicked: {
                     busyIndicator.running = true;
-                    TimeJS.logOut(function(data){
+                    Crona.logOut(function(data){
                         busyIndicator.running = false;
                         logOutText.visible = true;
                         timerOut.start();
