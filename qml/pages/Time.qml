@@ -6,11 +6,21 @@ import "../crona.js" as Crona
 Page {
     id: page
 
-    // To enable PullDownMenu, place our content in a SilicaFlickable
+    function load(callback) {
+        busyIndicator.running = true;
+        callback(function(msg){
+            busyIndicator.running = false;
+            logText.text = msg;
+            logText.visible = true;
+
+            return timer.running ? timer.restart() : timer.start();
+        });
+    }
+
     SilicaFlickable {
         anchors.fill: parent
+        contentHeight: column.height
 
-        // PullDownMenu and PushUpMenu must be declared in SilicaFlickable, SilicaListView or SilicaGridView
         PullDownMenu {
             MenuItem {
                 text: qsTr("Settings")
@@ -23,11 +33,6 @@ Page {
             }
         }
 
-        // Tell SilicaFlickable the height of its content.
-        contentHeight: column.height
-
-        // Place our content in a Column.  The PageHeader is always placed at the top
-        // of the page, followed by our content.
         Column {
             id: column
             width: page.width
@@ -45,54 +50,35 @@ Page {
             Button {
                 width: parent.width
                 text: qsTr("In")
-                onClicked: {
-                    busyIndicator.running = true;
-                    Crona.logIn(function(data){
-                        busyIndicator.running = false;
-                        logInText.visible = true;
-                        timerIn.start();
+                onClicked: load(function(callback){
+                        Crona.clockIn(function(){
+                            callback(qsTr("Logged In!"));
+                        }, callback);
                     })
-                }
             }
             Button {
                 width: parent.width
                 text: qsTr("Out")
-                onClicked: {
-                    busyIndicator.running = true;
-                    Crona.logOut(function(data){
-                        busyIndicator.running = false;
-                        logOutText.visible = true;
-                        timerOut.start();
+                onClicked: load(function(callback){
+                        Crona.clockOut(function(){
+                            callback(qsTr("Logged In!"));
+                        }, callback);
                     })
-                }
             }
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
             }
             Timer {
-                id: timerIn
+                id: timer
                 interval: 2500
                 running: false
                 repeat: false
-                onTriggered: logInText.visible = false
-            }
-            Timer {
-                id: timerOut
-                interval: 2500
-                running: false
-                repeat: false
-                onTriggered: logOutText.visible = false
+                onTriggered: logText.visible = false
             }
             Label {
-                id: logInText
+                id: logText
                 visible: false
-                text: qsTr("Logged In!")
-            }
-            Label {
-                id: logOutText
-                visible: false
-                text: qsTr("Logged Out!")
             }
         }
     }
