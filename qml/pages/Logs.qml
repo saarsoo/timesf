@@ -6,15 +6,21 @@ Page {
     id: root
 
     property bool loaded: false
+    property bool failed: false
 
     Component.onCompleted: {
-        var logs = Crona.getLogs();
+        Crona.getLogs(function(logs){
+            for (var i = 0; i < logs.length; i++) {
+                logsModel.append(logs[i]);
+            }
 
-        for (var i = 0; i < logs.length; i++) {
-            logsModel.append(logs[i]);
-        }
-
-        loaded = true;
+            loaded = true;
+        },
+        function(msg){
+            errorLabel.text = msg;
+            failed = true;
+            loaded = true;
+        });
     }
 
     ListModel {
@@ -36,7 +42,11 @@ Page {
         }
         ViewPlaceholder {
             text: qsTr("No logs today!")
-            enabled: loaded && logsModel.count == 0
+            enabled: loaded && logsModel.count == 0 && !failed
+        }
+        ViewPlaceholder {
+            id: errorLabel
+            enabled: failed
         }
         delegate: Item {
             height: 40
