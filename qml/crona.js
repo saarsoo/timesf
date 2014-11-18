@@ -1,4 +1,4 @@
-.import "ajax.js" as Ajax
+.import 'ajax.js' as Ajax
 .import QtQuick.LocalStorage 2.0 as LS
 
 var sid;
@@ -7,56 +7,64 @@ var pin;
 var baseUrl;
 
 function logIn(callback) {
-    Ajax.get("http://google.se", function(data){
+    Ajax.get('http://google.se', function(data){
         callback(data);
     });
 }
 
 function logOut(callback){
-    Ajax.get("http://google.se", function(data){
+    Ajax.get('http://google.se', function(data){
         callback(data);
     });
 }
 
 function getLogs(callback) {
-    callback([{type: "IN", time: "08:22"}, {type: "OUT", time: "11:44"}, {type: "IN", time: "18:10"}]);
-    return;
+    return [{type: 'IN', time: '08:22'}, {type: 'OUT', time: '11:44'}, {type: 'IN', time: '18:10'}];
 
-    login(function(){
-        var url = baseUrl + "webbtidur/?cmd=getstamplistxml&kortnr=" + userId + "&sid=" + sid + "&uid=" + new Date().getTime();
+    checkLoggedIn();
 
-        Ajax.get(url, function(data){
-            var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
-            var match;
+    var options = {
+        method: 'GET',
+        url: baseUrl + 'webbtidur/?cmd=getstamplistxml&kortnr=' + userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+        headers: {Cookie: 'crona_cbo_login_value_1=true;'}
+    };
 
-            var items = [];
+    var xhr = Ajax.request(options);
 
-            while ((match = regex.exec(data)) != null) {
-                var item = {};
-
-                item.time = match[1];
-                item.type = match[2];
-                if (item.type === "UT") {
-                    item.type = "OUT";
-                }
-                items.push(item);
-            }
-
-            callback(items);
-
-        }, {header: {Cookie: "crona_cbo_login_value_1=true;"}});
-    });
+    return formatLogs(xhr.responseText);
 }
 
-function login(callback){
-    var params = "cmd=login&kortnr=" + userId + "&pinkod=" + pin + "&frm_forw=Logga+in";
+function formatLogs(data) {
+    var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
+    var match;
 
-    Ajax.post(baseUrl, params, function(data, http){
-        var headers = http.getAllResponseHeaders();
+    var logs = [];
 
-        var loc = http.getResponseHeader("Location");
-        sid = loc.split("=")[1];
+    while ((match = regex.exec(data)) != null) {
+        var log = {};
 
-        callback();
-    });
+        log.time = match[1];
+        log.type = match[2];
+        if (log.type === 'UT') {
+            log.type = 'OUT';
+        }
+        logs.push(item);
+    }
+}
+
+function checkLoggedIn(){
+    if (sid) {
+        return;
+    }
+
+    var options = {
+        method: 'POST',
+        data: 'cmd=login&kortnr=' + userId + '&pinkod=' + pin + '&frm_forw=Logga+in'
+    };
+
+    var xhr = Ajax.request(options);
+    var headers = xhr.getAllResponseHeaders();
+
+    var loc = http.getResponseHeader('Location');
+    sid = loc.split('=')[1];
 }

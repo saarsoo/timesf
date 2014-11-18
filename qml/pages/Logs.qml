@@ -8,12 +8,13 @@ Page {
     property bool loaded: false
 
     Component.onCompleted: {
-        Crona.getLogs(function(data){
-            for(var i in data){
-                logsModel.append(data[i]);
-            }
-            loaded = true;
-        });
+        var logs = Crona.getLogs();
+
+        for (var i = 0; i < logs.length; i++) {
+            logsModel.append(logs[i]);
+        }
+
+        loaded = true;
     }
 
     ListModel {
@@ -38,8 +39,7 @@ Page {
             enabled: loaded && logsModel.count == 0
         }
         delegate: Item {
-            width: ListView.view.width
-            height: 70
+            height: 40
 
             BackgroundItem {
                 Column {
