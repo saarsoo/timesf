@@ -72,8 +72,11 @@
         <source>Logged In!</source>
         <translation type="unfinished"></translation>
     </message>
+</context>
+<context>
+    <name>crona</name>
     <message>
-        <source>Logged Out!</source>
+        <source>Failed to connect to crona server</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
