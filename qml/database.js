@@ -5,10 +5,10 @@ function checkDBConnection(){
         return;
     }
 
-    db = LocalStorage.openDatabaseSync("timesfDB", "1.0");
+    db = LocalStorage.openDatabaseSync('timesfDB', '1.0');
 
     db.transaction(function(tx){
-        tx.executeSql("CREATE TABLE IF NOT EXISTS settings(key TEXT, value TEXT)");
+        tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT, value TEXT)');
     });
 }
 
@@ -17,7 +17,7 @@ function getSettings(){
 
     var settings = {};
     db.transaction(function(tx){
-        var rs = tx.executeSql("SELECT key, value FROM settings");
+        var rs = tx.executeSql('SELECT key, value FROM settings');
         for (var i = 0; i < rs.rows.length; i++) {
             var setting = rs.rows.item(i);
             settings[setting.key] = setting.value;
@@ -32,11 +32,11 @@ function saveSettings(settings){
     checkDBConnection();
 
     db.transaction(function(tx){
-        tx.executeSql("DELETE FROM settings");
+        tx.executeSql('DELETE FROM settings');
 
         for (var key in settings) {
             if (settings.hasOwnProperty(key)) {
-                tx.executeSql("INSERT INTO settings VALUES (?, ?)", [key, settings[key]]);
+                tx.executeSql('INSERT INTO settings VALUES (?, ?)', [key, settings[key]]);
             }
         }
     });
