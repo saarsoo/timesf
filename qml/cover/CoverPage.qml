@@ -30,11 +30,60 @@
 
 import QtQuick 2.0
 import Sailfish.Silica 1.0
+import "../crona.js" as Crona
 
 CoverBackground {
     Label {
-        id: label
+        id: info
         anchors.centerIn: parent
-        text: qsTr("Timesf")
+        text: qsTr("Crona Timesf")
+    }
+
+    BusyIndicator {
+        running: !info.visible
+        anchors.centerIn: parent
+    }
+
+    Timer {
+        id: timer
+        interval: 2500
+        running: false
+        repeat: false
+        onTriggered: function(){
+            info.text = qsTr("Crona Timesf");
+        }
+    }
+
+    CoverActionList {
+        CoverAction {
+            onTriggered: function(){
+                info.visible = false;
+
+                Crona.clockIn(function(){
+                    info.visible = true;
+                    info.text = qsTr('In!');
+                    timer.start();
+                }, function(msg){
+                    info.visible = true;
+                    info.text = msg;
+                    timer.start();
+                })
+            }
+        }
+        CoverAction {
+            onTriggered: function(){
+                info.visible = false;
+
+                Crona.clockOut(function(){
+                    info.visible = true;
+                    info.text = qsTr('Out!');
+                    timer.start();
+                }, function(msg){
+                    info.visible = true;
+                    info.text = msg;
+                    timer.start();
+                })
+            }
+        }
     }
 }
