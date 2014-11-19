@@ -1,3 +1,5 @@
+.import QtQuick.LocalStorage 2.0 as LS
+
 var db;
 
 function checkDBConnection(){
@@ -5,7 +7,7 @@ function checkDBConnection(){
         return;
     }
 
-    db = LocalStorage.openDatabaseSync('timesfDB', '1.0');
+    db = LS.LocalStorage.openDatabaseSync('timesfDB', '1.0');
 
     db.transaction(function(tx){
         tx.executeSql('CREATE TABLE IF NOT EXISTS settings(key TEXT, value TEXT)');
