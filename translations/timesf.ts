@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.1">
+<TS version="2.0">
 <context>
     <name>CoverPage</name>
     <message>
@@ -72,11 +72,23 @@
         <source>Logged In!</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logged Out!</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>crona</name>
     <message>
         <source>Failed to connect to crona server</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already in!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Already out!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
