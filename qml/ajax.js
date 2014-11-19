@@ -30,11 +30,11 @@ function request(options){
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 302) {
                 if (options.success) {
-                    options.success(xhr.response, xhr.status, xhr);
+                    options.success(xhr.responseText, xhr.status, xhr);
                 }
             } else {
                 if (options.error) {
-                    options.error(xhr.response, xhr.status, xhr);
+                    options.error(xhr.responseText, xhr.status, xhr);
                 }
             }
         }
