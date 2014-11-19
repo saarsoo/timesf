@@ -1,29 +1,64 @@
 .import 'ajax.js' as Ajax
-.import QtQuick.LocalStorage 2.0 as LS
+.import 'database.js' as DB
 
 var sid;
-var userId;
-var pin;
-var baseUrl;
+var settings;
 
 function clockIn(success, error) {
-    tryLogin(function(){
-        // clock in code here!
+    getLogs(function(logs){
+        if (logs.length > 0) {
+            var lastLog = logs[0];
+            if (lastLog.type === 'IN') {
+                error(qsTr('Already in!'));
+                return;
+            }
+        }
+        success();
+        /*
+                    var options = {
+                        method: 'GET',
+                        url: settings.url + '/webbtidur/?cmd=stampla&event=in&anstnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+                        headers: {Cookie: 'crona_cbo_login_value_1=true;'},
+                        success: success,
+                        error: error
+                    };
+
+                    Ajax.request(options);
+                */
     }, error);
 }
 
 function clockOut(success, error){
-    tryLogin(function(){
-        // clock out code here!
+    getLogs(function(logs){
+        if (logs.length > 0) {
+            var lastLog = logs[0];
+            if (lastLog.type === 'OUT') {
+                error(qsTr('Already out!'));
+                return;
+            }
+        }
+        success();
+        /*var options = {
+            method: 'GET',
+            url: settings.url + '/webbtidur/?cmd=stampla&event=ut&anstnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+            headers: {Cookie: 'crona_cbo_login_value_1=true;'},
+            success: success,
+            error: error
+        };
+
+        Ajax.request(options);*/
     }, error);
 }
 
 function getLogs(success, error) {
+    /*success([{type: 'UT', time: '18:01'}, {type: 'IN', time: '08:12'}]);
+    return;*/
+
     tryLogin(function(){
         var options = {
             method: 'GET',
-            url: baseUrl + 'webbtidur/?cmd=getstamplistxml&kortnr=' + userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
-            headers: {Cookie: 'crona_cbo_login_value_1=true;', accept: 'application/json'},
+            url: settings.url + '/webbtidur/?cmd=getstamplistxml&kortnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+            headers: {Cookie: 'crona_cbo_login_value_1=true;'},
             success: function(data){
                 success(formatLogs(data));
             },
@@ -35,9 +70,7 @@ function getLogs(success, error) {
 }
 
 function formatLogs(data) {
-    return JSON.parse(data);
-
-    /*var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
+    var regex = /\d+ \w+ (\d{2}:\d{2}) (\w{2})/g;
     var match;
 
     var logs = [];
@@ -50,21 +83,22 @@ function formatLogs(data) {
         if (log.type === 'UT') {
             log.type = 'OUT';
         }
-        logs.push(item);
-    }*/
+        logs.push(log);
+    }
+
+    return logs;
 }
 
 function tryLogin(success, error){
-    if (sid) {
-        success();
-    }
+    settings = DB.getSettings();
 
     var options = {
+        url: settings.url,
         method: 'POST',
-        data: 'cmd=login&kortnr=' + userId + '&pinkod=' + pin + '&frm_forw=Logga+in',
+        data: 'cmd=login&kortnr=' + settings.userId + '&pinkod=' + settings.pin + '&frm_forw=Logga+in',
         success: function(data, status, xhr){
             var headers = xhr.getAllResponseHeaders();
-            var loc = http.getResponseHeader('Location');
+            var loc = xhr.getResponseHeader('Location');
             sid = loc.split('=')[1];
 
             success();
