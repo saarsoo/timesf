@@ -41,6 +41,7 @@ Page {
 
             TextField {
                 id: url
+                placeholderText: qsTr("Crona base url")
                 label: qsTr("Crona base url")
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
@@ -50,6 +51,7 @@ Page {
 
             TextField {
                 id: userId
+                placeholderText: qsTr("User ID")
                 label: qsTr("User ID")
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
@@ -59,6 +61,7 @@ Page {
 
             TextField {
                 id: pin
+                placeholderText: qsTr("Pin")
                 label: qsTr("Pin")
                 EnterKey.enabled: text.length > 0
                 EnterKey.iconSource: "image://theme/icon-m-enter-next"
