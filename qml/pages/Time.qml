@@ -4,8 +4,6 @@ import "../crona.js" as Crona
 
 
 Page {
-    id: page
-
     function load(callback) {
         busyIndicator.running = true;
         callback(function(msg){
@@ -19,6 +17,7 @@ Page {
 
     SilicaFlickable {
         anchors.fill: parent
+        width: parent.width
         contentHeight: column.height
 
         PullDownMenu {
@@ -35,8 +34,7 @@ Page {
 
         Column {
             id: column
-            width: page.width
-            spacing: Theme.paddingLarge
+            width: parent.width
             PageHeader {
                 title: qsTr("Timesf")
             }
@@ -56,6 +54,7 @@ Page {
                     }, callback);
                 })
             }
+
             Button {
                 width: parent.width
                 text: qsTr("Out")
@@ -65,10 +64,12 @@ Page {
                     }, callback);
                 })
             }
+
             BusyIndicator {
                 id: busyIndicator
                 anchors.horizontalCenter: parent.horizontalCenter
             }
+
             Timer {
                 id: timer
                 interval: 2500
@@ -76,7 +77,9 @@ Page {
                 repeat: false
                 onTriggered: logText.visible = false
             }
+
             Label {
+                x: Theme.paddingLarge
                 id: logText
                 visible: false
             }
