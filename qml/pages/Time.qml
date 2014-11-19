@@ -51,19 +51,19 @@ Page {
                 width: parent.width
                 text: qsTr("In")
                 onClicked: load(function(callback){
-                        Crona.clockIn(function(){
-                            callback(qsTr("Logged In!"));
-                        }, callback);
-                    })
+                    Crona.clockIn(function(){
+                        callback(qsTr("Logged In!"));
+                    }, callback);
+                })
             }
             Button {
                 width: parent.width
                 text: qsTr("Out")
                 onClicked: load(function(callback){
-                        Crona.clockOut(function(){
-                            callback(qsTr("Logged In!"));
-                        }, callback);
-                    })
+                    Crona.clockOut(function(){
+                        callback(qsTr("Logged Out!"));
+                    }, callback);
+                })
             }
             BusyIndicator {
                 id: busyIndicator
