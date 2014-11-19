@@ -4,8 +4,6 @@ import Sailfish.Silica 1.0
 import "../database.js" as DB
 
 Page {
-    id: page
-
     Component.onCompleted: {
         var settings = DB.getSettings();
         url.text = settings.url;
@@ -14,6 +12,8 @@ Page {
     }
 
     SilicaFlickable {
+        anchors.fill: parent
+
         PullDownMenu {
             MenuItem {
                 text: qsTr("Save")
@@ -28,46 +28,43 @@ Page {
             }
         }
 
-        width: parent.width
-        anchors.fill: parent
-
-        PageHeader {
-            title: qsTr("Settings")
-        }
+        contentHeight: column.height
 
         Column {
-            anchors.centerIn: parent
+            id: column
             width: parent.width
+            spacing: Theme.paddingLarge
 
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Crona base url")
+            PageHeader {
+                title: qsTr("Settings")
             }
 
             TextField {
                 id: url
+                label: qsTr("Crona base url")
+                EnterKey.enabled: text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-next"
+                EnterKey.onClicked: userId.focus = true
                 width: parent.width
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("User ID")
             }
 
             TextField {
                 id: userId
+                label: qsTr("User ID")
+                EnterKey.enabled: text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-next"
+                EnterKey.onClicked: pin.focus = true
                 width: parent.width
-            }
-
-            Label {
-                anchors.horizontalCenter: parent.horizontalCenter
-                text: qsTr("Pin")
             }
 
             TextField {
                 id: pin
-                echoMode: TextInput.Password
+                label: qsTr("Pin")
+                EnterKey.enabled: text.length > 0
+                EnterKey.iconSource: "image://theme/icon-m-enter-next"
+                EnterKey.onClicked: url.focus = true
                 width: parent.width
+                echoMode: TextInput.Password
             }
         }
     }
