@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.1">
 <context>
     <name>CoverPage</name>
     <message>
@@ -8,7 +8,15 @@
         <translation type="obsolete">Mein Cover</translation>
     </message>
     <message>
-        <source>Timesf</source>
+        <source>Crona Timesf</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>In!</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Out!</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -30,6 +38,10 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Crona base url</source>
         <translation type="unfinished"></translation>
     </message>
@@ -39,10 +51,6 @@
     </message>
     <message>
         <source>Pin</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Save</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
