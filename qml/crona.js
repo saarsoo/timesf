@@ -1,7 +1,6 @@
 .import 'ajax.js' as Ajax
 .import 'database.js' as DB
 
-var sid;
 var settings;
 
 function clockIn(success, error) {
@@ -13,18 +12,18 @@ function clockIn(success, error) {
                 return;
             }
         }
-        success();
-        /*
-                    var options = {
-                        method: 'GET',
-                        url: settings.url + '/webbtidur/?cmd=stampla&event=in&anstnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
-                        headers: {Cookie: 'crona_cbo_login_value_1=true;'},
-                        success: success,
-                        error: error
-                    };
 
-                    Ajax.request(options);
-                */
+        success();
+
+        /*var options = {
+            method: 'GET',
+            url: settings.url + '/webbtidur/?cmd=stampla&event=in&anstnr=' + settings.userId + '&sid=' + settings.sid + '&uid=' + new Date().getTime(),
+            headers: {Cookie: 'crona_cbo_login_value_1=true;'},
+            success: success,
+            error: error
+        };
+
+        Ajax.request(options);*/
     }, error);
 }
 
@@ -37,10 +36,12 @@ function clockOut(success, error){
                 return;
             }
         }
+
         success();
+
         /*var options = {
             method: 'GET',
-            url: settings.url + '/webbtidur/?cmd=stampla&event=ut&anstnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+            url: settings.url + '/webbtidur/?cmd=stampla&event=ut&anstnr=' + settings.userId + '&sid=' + settings.sid + '&uid=' + new Date().getTime(),
             headers: {Cookie: 'crona_cbo_login_value_1=true;'},
             success: success,
             error: error
@@ -51,13 +52,10 @@ function clockOut(success, error){
 }
 
 function getLogs(success, error) {
-    /*success([{type: 'UT', time: '18:01'}, {type: 'IN', time: '08:12'}]);
-    return;*/
-
     tryLogin(function(){
         var options = {
             method: 'GET',
-            url: settings.url + '/webbtidur/?cmd=getstamplistxml&kortnr=' + settings.userId + '&sid=' + sid + '&uid=' + new Date().getTime(),
+            url: settings.url + '/webbtidur/?cmd=getstamplistxml&kortnr=' + settings.userId + '&sid=' + settings.sid + '&uid=' + new Date().getTime(),
             headers: {Cookie: 'crona_cbo_login_value_1=true;'},
             success: function(data){
                 success(formatLogs(data));
@@ -92,6 +90,11 @@ function formatLogs(data) {
 function tryLogin(success, error){
     settings = DB.getSettings();
 
+    if (settings.sid) {
+        success();
+        return;
+    }
+
     var options = {
         url: settings.url,
         method: 'POST',
@@ -99,7 +102,8 @@ function tryLogin(success, error){
         success: function(data, status, xhr){
             var headers = xhr.getAllResponseHeaders();
             var loc = xhr.getResponseHeader('Location');
-            sid = loc.split('=')[1];
+            settings.sid = loc.split('=')[1];
+            DB.saveSid(settings.sid);
 
             success();
         },
