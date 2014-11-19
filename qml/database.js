@@ -29,6 +29,14 @@ function getSettings(){
     return settings;
 }
 
+function saveSid(sid){
+    checkDBConnection();
+
+    db.transaction(function(tx){
+        tx.executeSql('INSERT INTO settings VALUES (?, ?)', ['sid', sid]);
+    });
+}
+
 
 function saveSettings(settings){
     checkDBConnection();
