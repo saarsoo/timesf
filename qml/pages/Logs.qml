@@ -36,7 +36,7 @@ Page {
         ViewPlaceholder {
             id: info
             anchors.centerIn: parent
-            enabled: this.text.length > 0
+            enabled: info.text.length > 0
         }
 
         delegate: BackgroundItem {
