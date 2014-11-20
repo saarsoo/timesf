@@ -92,12 +92,11 @@ function tryLogin(success, error){
     }*/
 
     var options = {
+        get_header: 'Location',
         url: settings.url,
         method: 'POST',
         data: 'cmd=login&kortnr=' + settings.userId + '&pinkod=' + settings.pin + '&frm_forw=Logga+in',
-        success: function(data, status, xhr){
-            var headers = xhr.getAllResponseHeaders();
-            var loc = xhr.getResponseHeader('Location');
+        success: function(loc){
             settings.sid = loc.split('=')[1];
             DB.saveSid(settings.sid);
 
