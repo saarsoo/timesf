@@ -26,7 +26,22 @@ function request(options){
         }
     }
 
+    var finished = false;
+
     xhr.onreadystatechange = function(){
+        if (finished) {
+            return;
+        }
+
+        if (options.get_header) {
+            var header = xhr.getResponseHeader(options.get_header);
+            if (header) {
+                finished = true;
+                options.success(xhr.getResponseHeader(options.get_header));
+                return;
+            }
+        }
+
         if (xhr.readyState == 4) {
             if (xhr.status == 200 || xhr.status == 302) {
                 if (options.success) {
